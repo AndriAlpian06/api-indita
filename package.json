@@ -5,11 +5,11 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn ts-node src/server.ts",
-    "build": "tsc"
+    "start": "ts-node src/server.ts",
+    "build": "tsc -p tsconfig.json"
   },
   "author": "andri",
-  "license": "ISC",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@prisma/client": "5.3.1",
