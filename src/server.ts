@@ -200,7 +200,7 @@ app.get('/users/:id', accessValidation, async(req, res) => {
 
         if(!result){
             return res.status(404).json({
-                message: 'Merek tidak ditemukan'
+                message: 'user tidak ditemukan'
             })
         }
 
@@ -250,6 +250,104 @@ app.delete('/users/:id', async (req, res) => {
 
     res.json({
         message: `User ${id} deleted`
+    })
+})
+
+// CRUD KATEGORI
+// CREATE KATEGORI
+app.post('/kategori', accessValidation, async (req, res) => {
+    const { kategori } = req.body;
+
+    const result = await prisma.kategori_keyword.create({
+        data: {
+            kategori: kategori
+        }
+    })
+
+    res.json({
+        data: result,
+        message: 'kategori has created'
+    })
+})
+
+// READ KATEGORI
+app.get('/kategori', accessValidation, async (req, res) => {
+    const result = await prisma.kategori_keyword.findMany({
+        select: {
+            kategori: true,
+        }
+    })
+
+    res.json({
+        data: result,
+        message: 'List Kategori'
+    })
+})
+
+// DETAIL KATEGORI
+app.get('kategori/:id', accessValidation, async (req, res) => {
+    const {id} = req.params;
+
+    try{
+        const result = await prisma.kategori_keyword.findMany({
+            where: {
+                id: parseInt(id),
+            },
+            select:{
+                id: true,
+                kategori: true
+            }
+        })
+
+        if(!result){
+            return res.status(404).json({
+                message: 'kategori tidak ditemukan'
+            })
+        }
+
+        res.json({
+            data: result,
+            message: `Kategori Detail ${id}`
+        })
+    } catch (error){
+        res.json({
+            message: error
+        })
+    }
+})
+
+// UPDATE KATEGORI
+app.patch('/kategori/:id', accessValidation, async (req, res) => {
+    const {id} = req.params;
+    const {kategori} = req.body;
+
+    const result = await prisma.kategori_keyword.update({
+        data: {
+            kategori: kategori,
+        },
+        where: {
+            id: parseInt(id)
+        }
+    })
+
+    res.json({
+        data: result,
+        message: `Update Kategori ${id}`
+    })
+})
+
+// DELETE KATEGORI
+app.delete('/kategori/:id', accessValidation, async (req, res) => {
+    const {id} = req.params;
+
+    const result = await prisma.kategori_keyword.delete({
+        where: {
+            id: parseInt(id)
+        }
+    })
+
+    res.json({
+        message: `Kategori ${id} Deleted`
     })
 })
 
