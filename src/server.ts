@@ -362,7 +362,7 @@ app.post('/keyword', async (req, res) => {
     const { intent, deskripsi, keyword } = req.body;
 
     try{
-
+        
         const response = await prisma.keyword.create({
             data: {
                 intent,
