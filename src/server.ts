@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 const PORT = 3000;
@@ -10,7 +11,7 @@ const prisma = new PrismaClient();
 
 
 app.use(bodyParser.json());
-
+app.use(cors())
 app.use(express.json())
 
 
@@ -381,6 +382,8 @@ app.post('/keyword', async (req, res) => {
 
     }
 })
+
+// UPDATE KEYWORD
 
 app.listen(PORT, () => {
     console.log(`Server in running PORT: ${PORT}`)
