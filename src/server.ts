@@ -384,47 +384,44 @@ app.post('/keyword', async (req, res) => {
 })
 
 // UPDATE KEYWORD
-app.put('/keyword/:id', async (req, res) => {
-const { id } = req.params; // Ambil id dari parameter URL
-const { intent, deskripsi, keyword } = req.body;
+// app.put('/keyword/:id', async (req, res) => {
+// const { id } = req.params; // Ambil id dari parameter URL
+// const { intent, deskripsi, keyword } = req.body;
 
-    try {
-        const existingKeyword = await prisma.keyword.findUnique({
-            where: { id: parseInt(id) }, // Konversi id ke tipe Integer jika diperlukan
-        });
+//     try {
+//         const existingKeyword = await prisma.keyword.findUnique({
+//             where: { id: parseInt(id) }, // Konversi id ke tipe Integer jika diperlukan
+//         });
 
-        if (!existingKeyword) {
-            return res.status(404).json({ message: 'Data tidak ditemukan.' });
-        }
+//         if (!existingKeyword) {
+//             return res.status(404).json({ message: 'Data tidak ditemukan.' });
+//         }
 
-        // Gabungkan kata kunci yang sudah ada dengan kata kunci yang baru
-        let updatedKeywords = [...existingKeyword.keyword];
+//         // Gabungkan kata kunci yang sudah ada dengan kata kunci yang baru
+//         let updatedKeywords = [...existingKeyword.keyword];
 
-        // Tambahkan kata kunci baru jika ada
-        if (keyword) {
-            updatedKeywords = [...updatedKeywords, ...keyword];
-        }
+//         // Tambahkan kata kunci baru jika ada
+//         if (keyword) {
+//             updatedKeywords = [...updatedKeywords, ...keyword];
+//         }
 
-        // Gabungkan semua kata kunci menjadi satu string dengan koma sebagai pemisah
-        const combinedKeywords = updatedKeywords.join(', ');
+//         // Lakukan pembaruan data dengan menggunakan metode Prisma .update
+//         const updatedKeyword = await prisma.keyword.update({
+//             where: { id: parseInt(id) },
+//             data: {
+//                 intent,
+//                 deskripsi,
+//                 keyword: { set: updatedKeywords }, // Gunakan gabungan kata kunci
+//             },
+//         });
 
-        // Lakukan pembaruan data dengan menggunakan metode Prisma .update
-        const updatedKeyword = await prisma.keyword.update({
-            where: { id: parseInt(id) },
-            data: {
-                intent,
-                deskripsi,
-                keyword: combinedKeywords, // Gunakan gabungan kata kunci
-            },
-        });
-
-        console.log('Data berhasil diupdate:', updatedKeyword);
-        res.status(200).json({ message: 'Data berhasil diupdate.', data: updatedKeyword });
-    } catch (error) {
-        console.error('Terjadi kesalahan saat mengupdate data:', error);
-        res.status(500).json({ message: 'Terjadi kesalahan saat mengupdate data.', error: error });
-    }
-});
+//         console.log('Data berhasil diupdate:', updatedKeyword);
+//         res.status(200).json({ message: 'Data berhasil diupdate.', data: updatedKeyword });
+//     } catch (error) {
+//         console.error('Terjadi kesalahan saat mengupdate data:', error);
+//         res.status(500).json({ message: 'Terjadi kesalahan saat mengupdate data.', error: error });
+//     }
+// });
   
 app.listen(PORT, () => {
     console.log(`Server in running PORT: ${PORT}`)
