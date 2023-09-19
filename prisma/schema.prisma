@@ -30,7 +30,7 @@ model keyword {
   id          Int      @id @default(autoincrement())
   intent      String   @db.VarChar(255)
   deskripsi   String   @db.VarChar(255)
-  keyword     String   @db.VarChar(255)
+  keyword     String[]
   createdAt   DateTime @default(now()) @db.Timestamp(0)
   updateAt    DateTime @default(now()) @db.Timestamp(0)
 }

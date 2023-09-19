@@ -362,8 +362,8 @@ app.post('/keyword', async (req, res) => {
     const { intent, deskripsi, keyword } = req.body;
 
     try{
-        
-        const response = await prisma.keyword.create({
+
+        const result = await prisma.keyword.create({
             data: {
                 intent,
                 deskripsi,
@@ -371,13 +371,13 @@ app.post('/keyword', async (req, res) => {
             }
         })
 
-        console.log('Data berhasil disimpan:', response);
+        console.log('Data berhasil disimpan:', result);
         res.status(200).json({ message: 'Data berhasil disimpan.' });
 
     } catch (error){
         
         console.error('Terjadi kesalahan saat menyimpan data:', error);
-        res.status(500).json({ message: 'Terjadi kesalahan saat menyimpan data.' });
+        res.status(500).json({ message: 'Terjadi kesalahan saat menyimpan data.', error: error });
 
     }
 })
