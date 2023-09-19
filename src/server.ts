@@ -2,9 +2,9 @@ import express, { NextFunction, Request, Response } from 'express'
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import cors from 'cors'
 
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 const prisma = new PrismaClient();
