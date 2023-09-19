@@ -286,12 +286,12 @@ app.get('/kategori', accessValidation, async (req, res) => {
 
 // DETAIL KATEGORI
 app.get('kategori/:id', accessValidation, async (req, res) => {
-    const {id} = req.params;
+    const {id} = req.params
 
     try{
         const result = await prisma.kategori_keyword.findMany({
             where: {
-                id: parseInt(id),
+                id: parseInt(id)
             },
             select:{
                 id: true,
@@ -349,6 +349,32 @@ app.delete('/kategori/:id', accessValidation, async (req, res) => {
     res.json({
         message: `Kategori ${id} Deleted`
     })
+})
+
+// KEYWORD
+// ADD KEYWORD
+app.post('/keyword', accessValidation, async (req, res) => {
+    const { intent, deskripsi, keyword } = req.body;
+
+    try{
+
+        const response = await prisma.keyword.create({
+            data: {
+                intent,
+                deskripsi,
+                keyword: keyword,
+            }
+        })
+
+        console.log('Data berhasil disimpan:', response);
+        res.status(200).json({ message: 'Data berhasil disimpan.' });
+
+    } catch (error){
+        
+        console.error('Terjadi kesalahan saat menyimpan data:', error);
+        res.status(500).json({ message: 'Terjadi kesalahan saat menyimpan data.' });
+
+    }
 })
 
 app.listen(PORT, () => {

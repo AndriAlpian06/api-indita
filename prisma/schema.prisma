@@ -28,7 +28,8 @@ model kategori_keyword {
 
 model keyword {
   id          Int      @id @default(autoincrement())
-  id_kategori String   @db.VarChar(255)
+  intent      String   @db.VarChar(255)
+  deskripsi   String   @db.VarChar(255)
   keyword     String   @db.VarChar(255)
   createdAt   DateTime @default(now()) @db.Timestamp(0)
   updateAt    DateTime @default(now()) @db.Timestamp(0)
