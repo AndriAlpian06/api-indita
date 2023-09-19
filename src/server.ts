@@ -353,7 +353,7 @@ app.delete('/kategori/:id', accessValidation, async (req, res) => {
 
 // KEYWORD
 // ADD KEYWORD
-app.post('/keyword', accessValidation, async (req, res) => {
+app.post('/keyword', async (req, res) => {
     const { intent, deskripsi, keyword } = req.body;
 
     try{
