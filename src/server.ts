@@ -3,8 +3,8 @@ import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cors from 'cors'
+import bodyParser from 'body-parser';
 
-const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3000;
 const prisma = new PrismaClient();
