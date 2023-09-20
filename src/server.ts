@@ -171,7 +171,7 @@ app.post('/users', async (req, res, next) => {
 })
 
 // READ
-app.get('/users', accessValidation, async (req, res) => {
+app.get('/users', async (req, res) => {
     const result = await prisma.users.findMany({
         select: {
             id: true,
