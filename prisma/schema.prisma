@@ -19,27 +19,63 @@ model users {
   @@map("users")
 }
 
-model kategori_keyword {
-  id        Int      @id @default(autoincrement())
-  kategori  String   @db.VarChar(255)
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  updateAt  DateTime @default(now()) @db.Timestamp(0)
+model menu {
+  id             Int      @id @default(autoincrement())
+  nama_menu      String   @unique @db.VarChar(255)
+  deskripsi_menu String   @db.VarChar(255)
+  id_kategori    Int    
+  createdAt      DateTime @default(now()) @db.Timestamp(0)
+  updateAt       DateTime @default(now()) @db.Timestamp(0)
+  kategori       kategori? @relation("menu_to_kategori", fields: [id_kategori], references: [id])
+  subMenus       menuToSubMenu[]
 }
 
-model keyword {
+model subMenu {
+  id                Int      @id @default(autoincrement())
+  subMenu           String   @unique @db.VarChar(255)
+  deskripsi_subMenu String   @db.VarChar(255)
+  createdAt         DateTime @default(now()) @db.Timestamp(0)
+  updateAt          DateTime @default(now()) @db.Timestamp(0)
+  menus             menuToSubMenu[]   
+}
+
+model menuToSubMenu {
+  id           Int     @id @default(autoincrement())
+  menuId       Int
+  subMenuId    Int
+  menu         menu    @relation(fields: [menuId], references: [id])
+  subMenu      subMenu @relation(fields: [subMenuId], references: [id])
+}
+
+model kategori {
   id        Int      @id @default(autoincrement())
-  intent    String   @db.VarChar(255)
-  deskripsi String   @db.VarChar(255)
+  kategori  String   @unique @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updateAt  DateTime @default(now()) @db.Timestamp(0)
-  keyword   String[]
+  menu      menu[]   @relation("menu_to_kategori")
 }
 
 model intent {
-  id               Int      @id @default(autoincrement())
-  nama_intent      String   @db.VarChar(255)
-  deskripsi_intent String   @db.VarChar(255)
-  id_kategori      String   @db.VarChar(255)
-  createdAt        DateTime @default(now()) @db.Timestamp(0)
-  updateAt         DateTime @default(now()) @db.Timestamp(0)
+  id             Int      @id @default(autoincrement())
+  intent         String   @unique @db.VarChar(255)
+  deskripsi      String   @db.VarChar(255)
+  createdAt      DateTime @default(now()) @db.Timestamp(0)
+  updateAt       DateTime @default(now()) @db.Timestamp(0)
+  keywords       intentToKeyword[]
+}
+
+model keyword {
+  id                Int      @id @default(autoincrement())
+  keyword           String   @unique @db.VarChar(255)
+  createdAt         DateTime @default(now()) @db.Timestamp(0)
+  updateAt          DateTime @default(now()) @db.Timestamp(0)
+  intents           intentToKeyword[]   
+}
+
+model intentToKeyword {
+  id           Int     @id @default(autoincrement())
+  intentId     Int
+  keywordId    Int
+  intent       intent    @relation(fields: [intentId], references: [id])
+  keyword      keyword   @relation(fields: [keywordId], references: [id])
 }
